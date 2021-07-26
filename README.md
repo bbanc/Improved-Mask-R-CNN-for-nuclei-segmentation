@@ -11,7 +11,7 @@ The repository was created using Python 3.7.4
 
 ### Datasets
 As part of this release we used the [MoNuSeg2018](https://monuseg.grand-challenge.org/) and [PanNuke](https://jgamper.github.io/PanNukeDataset/) datasets.
-The additionally used hematoxylin-stain intensities and estimated distance maps can be found [HERE](LINK)
+The additionally used hematoxylin-stain intensities and estimated distance maps can be found [HERE](https://drive.google.com/drive/folders/1cgSOSYvNPFOZrbUjbIYc00SB4wuKT2ZF?usp=sharing).
 
 ## Data and Folder structure
 Data is loaded using the MoNuSegDataset class defined in `MoNuSeg.py`. It extends the Dataset class of the matterport implementation using the `load_image` function. It contains 2 modes based on whether the ground truth (GT), or estimated (U-Net) data should be loaded. Examples of using the Dataset class can be found in our `Dataset_Notebook`.
@@ -24,7 +24,7 @@ All data is placed into the `datasets/MoNuSeg/[train/val]/` folder and is then f
 - `./tissue_images/`: RGB-images in .tif format
 
 Trained models get saved automatically into a `./logs` folder. 
-!!! NOTE: I have uploaded a model [HERE](LINK) if you want to try running the code without having to train a model from sratch - we could provide the Pannuke pretrained one. !!!
+!!! NOTE: I have uploaded a model [HERE](https://drive.google.com/file/d/1YkDKZVB4t08qNL4ioAb_vncfljHcITTP/view?usp=sharing) if you want to try running the code without having to train a model from sratch - we could provide the Pannuke pretrained one. !!!
 
 
 # Running the code
