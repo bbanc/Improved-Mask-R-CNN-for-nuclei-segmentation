@@ -29,7 +29,7 @@ Trained models get saved automatically into a `./logs` folder.
 
 After all setup is complete, the code can be run in the Jupyter Notebooks. Further information can be found in the respective notebooks:
 - `Dataset_Notebook`: how to use the dataset class to add, load and display data within the Dataset class.
-- `Detection_Notebook`: how to run inference using the provided shorthand functions for single model inference, ensembling, and TTA. It also showcases how to calculate the differences in scores using the different approaches.
+- `Detection_Notebook`: how to run inference using the provided Mask R-CNN. It also showcases how to visualize detections in Mask R-CNN.
 - `Ensemble_Notebook`: ensembling inference method step-by-step.
 - `Merge_Notebook`: our replacement of the traditional non-maximum suppression used in Mask R-CNN.
 - `TTA_Notebook`: our implementation of test-time augmentation.
