@@ -936,7 +936,7 @@ def run_ensemble_prediction(model_list, image, config, nms_thresh = 0.3):
     result_list = []
     c = 1
     for model in model_list:
-        print("[{}/{}] Running detection...".format(c, len(model_list)))
+        print("[{}/{}] Running      detection...".format(c, len(model_list)))
         r = model.detect([image])
         #detect works on a list of images, returns a dict with rois, masks, class ids, and scores
         print("[{}/{}] Done detecting... FOUND INSTANCES:".format(c, len(model_list)) + str(r[0]["masks"].shape[-1]))
@@ -1092,8 +1092,6 @@ def calc_scores_dataset(model, dataset):
           
     return avg_aji, avg_pq, avg_dq, avg_sq, avg_dice1, avg_dice2, scores
     
-
-
 def simple_merge_TTA(results):
     all_b = []
     all_m = []
@@ -1103,7 +1101,7 @@ def simple_merge_TTA(results):
         all_b.append(r["rois"])
 
         if r["masks"].dtype != np.bool:
-            print("mask dtype != bool detected, using 0.7*max as threshod")
+            print("mask dtype != bool detected, using 0.7*max as threshold")
             m = r["masks"] > r["masks"].max() * 0.7
             all_m.append(m)
         all_s.append(r["scores"])
