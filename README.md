@@ -7,6 +7,8 @@ This repository contains the implementational parts of our COMPAY2021 submission
 ```
 pip install -r req.txt
 ```
+The repository was created using Python 3.7.4
+
 ### Datasets
 As part of this release we used the [MoNuSeg2018](https://monuseg.grand-challenge.org/) and [PanNuke](https://jgamper.github.io/PanNukeDataset/) datasets.
 The additionally used hematoxylin-stain intensities and estimated distance maps can be found [HERE](LINK)
