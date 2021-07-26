@@ -1,0 +1,15 @@
+numpy
+Pillow
+albumentations
+cython
+matplotlib
+scikit-image
+opencv-python
+h5py
+imgaug
+jupyter
+Keras==2.2.5
+tensorboard==1.14.0
+tensorflow-estimator==1.14.0
+tensorflow-gpu==1.14.0
+imagecodecs
