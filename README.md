@@ -32,13 +32,13 @@ The COCO pretrained weights used in our experiments can be found in the original
 # Running the code
 
 After all setup is complete, the code can be run in the Jupyter Notebooks. Further information can be found in the respective notebooks:
-- `Dataset_Notebook`: how to use the dataset class to add, load and display data within the Dataset class.
-- `Detection_Notebook`: how to run inference using the provided Mask R-CNN. It also showcases how to visualize detections in Mask R-CNN.
-- `Ensemble_Notebook`: ensembling inference method step-by-step.
-- `Merge_Notebook`: our replacement of the traditional non-maximum suppression used in Mask R-CNN.
-- `TTA_Notebook`: our implementation of test-time augmentation.
-- `Train_Notebook`: train Mask R-CNN+ from COCO or PanNuke pretrained weights, and its ensemble variants.
-- `Validation_Notebook`: get validation scores on the MoNuSeg test-set using the `stats_utils.py` from [HoVerNet](https://github.com/vqdang/hover_net).
+- `Dataset Usage`: how to use the dataset class to add, load and display data within the Dataset class.
+- `Single Model Visualizations`: how to run inference using the provided Mask R-CNN. It also showcases how to visualize detections in Mask R-CNN.
+- `Ensemble Detections`: ensembling inference method step-by-step.
+- `Merge Algorithm`: our replacement of the traditional non-maximum suppression used in Mask R-CNN.
+- `TTA Detections`: our implementation of test-time augmentation.
+- `Train Models`: train Mask R-CNN+ and its ensemble variants from pretrained weights.
+- `Validations`: get validation scores on the MoNuSeg test-set using the `stats_utils.py` from [HoVerNet](https://github.com/vqdang/hover_net).
 
 # Config differences from matterport
 The configs containing model-setup parameters are part of `MoNuSeg.py`. The major differences from the matterport implementations include
