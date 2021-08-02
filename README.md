@@ -24,7 +24,10 @@ All data is placed into the `datasets/MoNuSeg/[train/val]/` folder and is then f
 - `./tissue_images/`: RGB-images in .tif format
 
 Trained models get saved automatically into a `./logs` folder. 
+The COCO pretrained weights used in our experiments can be found in the original repository under [the v2.0 release](https://github.com/matterport/Mask_RCNN/releases/tag/v2.0).
+
 !!! NOTE: I have uploaded a model [HERE](https://drive.google.com/file/d/1YkDKZVB4t08qNL4ioAb_vncfljHcITTP/view?usp=sharing) if you want to try running the code without having to train a model from sratch - we could provide the Pannuke pretrained one. !!!
+
 
 
 # Running the code
