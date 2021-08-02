@@ -1239,7 +1239,7 @@ def mrcnn_mask_loss_graph(target_masks, target_class_ids, pred_masks):
 ############################################################
 
 def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
-                  use_mini_mask=False, seed = 142857, use_randaugment = False):
+                  use_mini_mask=False, seed = 142857):
     """Load and return ground truth data for an image (image, mask, bounding boxes).
 
     augment: (deprecated. Use augmentation instead). If true, apply random
@@ -1286,40 +1286,39 @@ def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
     # Augmentation
     # This requires the Albumentaions lib (https://github.com/albumentations-team/albumentations)
     if len(class_ids) > 0:
-        if augmentation:
-            if not use_randaugment:
+        if augmentation:            
             # Use standard albumentations augmentation
                 
-                image_shape = image.shape
-                mask_shape = mask.shape
-                # Set fixed seed to apply same transformation to both image and mask
-                seed = random.randint(0, 2021)
-                random.seed(seed)
-                # mask.shape = H,W,Nr_Mask - Albumentations needs int8, force it to be sure
+            image_shape = image.shape
+            mask_shape = mask.shape
+            # Set fixed seed to apply same transformation to both image and mask
+            seed = random.randint(0, 2021)
+            random.seed(seed)
+            # mask.shape = H,W,Nr_Mask - Albumentations needs int8, force it to be sure
+            
+            if augmentation.additional_targets:
+            # Have additional targets, extra channel in RGB image
+                Hch = image[:,:,4]
+                dist = image[:,:,3]
+                rgb_image = image[:,:,0:3]
                 
-                if augmentation.additional_targets:
-                # Have additional targets, extra channel in RGB image
-                    Hch = image[:,:,4]
-                    dist = image[:,:,3]
-                    rgb_image = image[:,:,0:3]
-                    
-                    augmented = augmentation(image = rgb_image, mask = mask.astype(np.int8), Hch = Hch , dist = dist) 
-                    image[:,:,0:3] = augmented['image'] 
-                    image[:,:,3] = augmented['dist']
-                    image[:,:,4] = augmented['Hch']
-                    mask = augmented['mask']     
+                augmented = augmentation(image = rgb_image, mask = mask.astype(np.int8), Hch = Hch , dist = dist) 
+                image[:,:,0:3] = augmented['image'] 
+                image[:,:,3] = augmented['dist']
+                image[:,:,4] = augmented['Hch']
+                mask = augmented['mask']     
                 
-                else: 
-                # Apply augmentations to image and mask
-                    augmented = augmentation(image = image, mask = mask.astype(np.int8))
-                    image = augmented['image'] 
-                    mask = augmented['mask']     
-                
-                # Verify that shapes didn't change - necessary for input images, cropping must be called before
-                assert image.shape == image_shape, "Augmentation must not change image size, Use Config Resize Options"
-                assert mask.shape == mask_shape, "Augmentation must not change mask size, Use Config Resize Options"
-                # Ensure mask is back to bool for further Mask R-CNN shenanigans
-                mask = np.array(mask.astype(np.bool))
+            else: 
+            # Apply augmentations to image and mask
+                augmented = augmentation(image = image, mask = mask.astype(np.int8))
+                image = augmented['image'] 
+                mask = augmented['mask']     
+            
+            # Verify that shapes didn't change - necessary for input images, cropping must be called before
+            assert image.shape == image_shape, "Augmentation must not change image size, Use Config Resize Options"
+            assert mask.shape == mask_shape, "Augmentation must not change mask size, Use Config Resize Options"
+            # Ensure mask is back to bool for further Mask R-CNN shenanigans
+            mask = np.array(mask.astype(np.bool))
         
                     
         # Note that some boxes might be all zeros if the corresponding mask got cropped out.
@@ -1734,7 +1733,7 @@ class DataGenerator(keras.utils.Sequence):
 
     def __init__(self, dataset, config, shuffle=True, augment=False, augmentation=None,
                    random_rois=0, batch_size=1, detection_targets=False,
-                   no_augmentation_sources=None, use_randaugment = False):
+                   no_augmentation_sources=None):
 
         self.image_ids = np.copy(dataset.image_ids)
         self.dataset = dataset
@@ -1757,7 +1756,6 @@ class DataGenerator(keras.utils.Sequence):
         self.batch_size = batch_size
         self.detection_targets = detection_targets     
         self.no_augmentation_sources = no_augmentation_sources or []
-        self.use_randaugment = use_randaugment
 
    
 
@@ -1780,24 +1778,24 @@ class DataGenerator(keras.utils.Sequence):
                         image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
                         load_image_gt(self.dataset, self.config, image_id, augment=self.augment,
                                     augmentation=None,
-                                    use_mini_mask=self.config.USE_MINI_MASK, use_randaugment = self.use_randaugment)
+                                    use_mini_mask=self.config.USE_MINI_MASK)
                     else:
                         image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
                             load_image_gt(self.dataset, self.config, image_id, augment=self.augment,
                                         augmentation=self.augmentation,
-                                        use_mini_mask=self.config.USE_MINI_MASK, use_randaugment = self.use_randaugment)
+                                        use_mini_mask=self.config.USE_MINI_MASK)
                 except Exception:
                     logging.exception("Caught Exception in load_gt, trying to reso...")
                     if self.dataset.image_info[image_id]['source'] in self.no_augmentation_sources:
                         image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
                         load_image_gt(self.dataset, self.config, image_id, augment=self.augment,
                                     augmentation=None,
-                                    use_mini_mask=self.config.USE_MINI_MASK, use_randaugment = self.use_randaugment)
+                                    use_mini_mask=self.config.USE_MINI_MASK)
                     else:
                         image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
                             load_image_gt(self.dataset, self.config, image_id, augment=self.augment,
                                         augmentation=self.augmentation,
-                                        use_mini_mask=self.config.USE_MINI_MASK, use_randaugment = self.use_randaugment)
+                                        use_mini_mask=self.config.USE_MINI_MASK)
                     
 
                 # RPN Targets, cant skip like in the generator, return empty targets instead (neutral anchors)
@@ -2430,7 +2428,7 @@ class MaskRCNN():
         train_generator = DataGenerator(train_dataset, self.config, shuffle=True,
                                          augmentation=augmentation,
                                          batch_size=self.config.BATCH_SIZE,
-                                         no_augmentation_sources=no_augmentation_sources, use_randaugment = use_randaugment)
+                                         no_augmentation_sources=no_augmentation_sources)
 
         val_generator = DataGenerator(val_dataset, self.config, shuffle=True,
                                        batch_size=self.config.BATCH_SIZE)
@@ -2448,9 +2446,6 @@ class MaskRCNN():
             # Save models every few epochs                            
             keras.callbacks.ModelCheckpoint(self.checkpoint_path,
                                             verbose=0, save_weights_only=True, period = 5),
-            # Save best model at the end of training                                
-            keras.callbacks.ModelCheckpoint(os.path.join(self.log_dir, self.config.NAME + "_BEST.h5"),
-                                             verbose=0, save_best_only=True, save_weights_only=True),
             # Early stopping
             #keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.005, patience=5, verbose=1, mode='min', baseline=None, restore_best_weights=True)                            
         ]
