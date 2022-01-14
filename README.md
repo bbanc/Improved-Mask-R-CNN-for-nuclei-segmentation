@@ -26,9 +26,6 @@ All data is placed into the `datasets/MoNuSeg/[train/val]/` folder and is then f
 Trained models get saved automatically into a `./logs` folder. 
 The COCO pretrained weights used in our experiments can be found in the original repository under [the v2.0 release named mask_rcnn_coco.h5](https://github.com/matterport/Mask_RCNN/releases/tag/v2.0). Per default the model simply needs to be saved into the main folder of the repository.  
 
-!!! NOTE: I have uploaded a model [HERE](https://drive.google.com/file/d/1YkDKZVB4t08qNL4ioAb_vncfljHcITTP/view?usp=sharing) if you want to try running the code without having to train a model from sratch - we could provide the Pannuke pretrained one. !!!
-
-
 # Running the code
 
 After all setup is complete, the code can be run in the Jupyter Notebooks. Further information can be found in the respective notebooks:
