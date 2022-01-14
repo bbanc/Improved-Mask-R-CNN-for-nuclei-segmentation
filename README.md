@@ -24,7 +24,7 @@ All data is placed into the `datasets/MoNuSeg/[train/val]/` folder and is then f
 - `./tissue_images/`: RGB-images in .tif format
 
 Trained models get saved automatically into a `./logs` folder. 
-The COCO pretrained weights used in our experiments can be found in the original repository under [the v2.0 release named mask_rcnn_coco.h5](https://github.com/matterport/Mask_RCNN/releases/tag/v2.0). Per default the model simply needs to be saved into the main folder of the repository.  
+The COCO pretrained weights used in our experiments can be found in the original repository under [the v2.0 release named mask_rcnn_coco.h5](https://github.com/matterport/Mask_RCNN/releases/tag/v2.0). Per default, the model simply needs to be saved into the main folder of the repository.  
 
 # Running the code
 
